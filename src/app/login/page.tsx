@@ -1,12 +1,14 @@
-export default function Login() {
+import { Suspense } from "react";
+import LoginForm from "./LoginForm";
+
+export default function LoginPage() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <div className="w-full max-w-sm rounded-lg border border-gray-800 bg-gray-900 p-8">
-        <h1 className="text-xl font-bold">Sign In</h1>
-        <p className="mt-2 text-sm text-gray-400">
-          Firebase Auth integration coming in Phase 2.
-        </p>
+    <Suspense fallback={
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="text-gray-400">Loading...</div>
       </div>
-    </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }
