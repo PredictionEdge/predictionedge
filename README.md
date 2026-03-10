@@ -110,7 +110,7 @@ src/
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS
 - **Auth**: Firebase Authentication
 - **Payments**: Stripe (Checkout + Customer Portal)
