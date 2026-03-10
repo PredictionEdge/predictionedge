@@ -8,14 +8,9 @@ export default function SignOutButton() {
   const { signOut } = useAuth();
   const router = useRouter();
 
-  async function handleSignOut() {
-    await signOut();
-    router.push("/");
-  }
-
   return (
-    <Button variant="ghost" size="sm" onClick={handleSignOut}>
-      Sign Out
+    <Button variant="ghost" size="sm" className="text-muted-foreground text-xs" onClick={async () => { await signOut(); router.push("/"); }}>
+      Sign out
     </Button>
   );
 }

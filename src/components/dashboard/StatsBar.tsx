@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 
 interface Stats { total: number; avgSpread: number; maxSpread: number; categories: number; }
 
@@ -9,45 +8,41 @@ export default function StatsBar() {
   const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
-    async function fetchStats() {
+    async function fetch_() {
       try {
         const res = await fetch("/api/arbs");
         if (!res.ok) return;
         const data = await res.json();
-        if (!data.arbs || data.arbs.length === 0) return;
+        if (!data.arbs?.length) return;
         const spreads = data.arbs.map((a: { spread: number }) => a.spread);
-        const cats = new Set(data.arbs.map((a: { category: string }) => a.category).filter(Boolean));
         setStats({
           total: data.total,
           avgSpread: spreads.reduce((a: number, b: number) => a + b, 0) / spreads.length,
           maxSpread: Math.max(...spreads),
-          categories: cats.size,
+          categories: new Set(data.arbs.map((a: { category: string }) => a.category).filter(Boolean)).size,
         });
-      } catch { /* silent */ }
+      } catch {}
     }
-    fetchStats();
+    fetch_();
   }, []);
 
   if (!stats) return null;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-      <StatCard icon="🎯" value={stats.total.toString()} label="Active Opportunities" />
-      <StatCard icon="📊" value={`${stats.avgSpread.toFixed(1)}%`} label="Avg Spread" />
-      <StatCard icon="🔥" value={`${stats.maxSpread.toFixed(1)}%`} label="Best Spread" />
-      <StatCard icon="📁" value={stats.categories.toString()} label="Categories" />
+      <StatCard value={stats.total.toString()} label="Opportunities" accent="var(--color-warm)" />
+      <StatCard value={`${stats.avgSpread.toFixed(1)}%`} label="Avg Spread" accent="var(--color-kalshi)" />
+      <StatCard value={`${stats.maxSpread.toFixed(1)}%`} label="Best Spread" accent="var(--color-spread-green)" />
+      <StatCard value={stats.categories.toString()} label="Categories" accent="var(--color-poly)" />
     </div>
   );
 }
 
-function StatCard({ icon, value, label }: { icon: string; value: string; label: string }) {
+function StatCard({ value, label, accent }: { value: string; label: string; accent: string }) {
   return (
-    <Card>
-      <CardContent className="pt-4">
-        <span className="text-2xl">{icon}</span>
-        <p className="mt-2 text-2xl font-bold font-mono">{value}</p>
-        <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
-      </CardContent>
-    </Card>
+    <div className="rounded-xl border border-border/40 bg-card/30 p-4">
+      <p className="text-2xl font-mono font-bold" style={{ color: accent }}>{value}</p>
+      <p className="text-[10px] text-muted-foreground mt-0.5 uppercase tracking-wider">{label}</p>
+    </div>
   );
 }
