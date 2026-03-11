@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website", siteName: "PredictionEdge",
     title: "PredictionEdge", description: "Real-time prediction market arbitrage.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image", title: "PredictionEdge" },
   robots: { index: true, follow: true },
