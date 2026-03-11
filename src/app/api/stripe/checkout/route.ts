@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe/client";
 import { getCurrentUser } from "@/lib/auth/get-user";
-import { getUserSubscription, updateUserSubscription } from "@/lib/stripe/subscription";
+import { ensureUser, getUserSubscription, updateUserSubscription } from "@/lib/stripe/subscription";
 
 export async function POST(request: NextRequest) {
   // CSRF: verify request comes from our own origin
@@ -21,6 +21,9 @@ export async function POST(request: NextRequest) {
     if (!priceId) return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
 
     const stripe = getStripe();
+
+    // Ensure user row exists before any updates
+    await ensureUser(user.uid, user.email);
 
     const existingSub = await getUserSubscription(user.uid);
     let customerId = existingSub.stripeCustomerId;

@@ -11,7 +11,9 @@ export interface UserSubscription {
 /**
  * Get subscription status for a user by Supabase UID.
  */
-export async function getUserSubscription(uid: string): Promise<UserSubscription> {
+export async function getUserSubscription(
+  uid: string
+): Promise<UserSubscription> {
   const pool = getPool();
   const result = await pool.query(
     `SELECT subscription_status, stripe_customer_id, stripe_subscription_id,
@@ -37,7 +39,21 @@ export async function getUserSubscription(uid: string): Promise<UserSubscription
 }
 
 /**
- * Upsert user subscription data.
+ * Ensure a pe_users row exists for this uid. If the row already exists, this is a no-op.
+ */
+export async function ensureUser(uid: string, email?: string): Promise<void> {
+  const pool = getPool();
+  await pool.query(
+    `INSERT INTO pe_users (uid, email)
+     VALUES ($1, $2)
+     ON CONFLICT (uid) DO NOTHING`,
+    [uid, email || null]
+  );
+}
+
+/**
+ * Update subscription-related fields on an existing pe_users row.
+ * Only non-undefined fields are updated. The row must already exist (call ensureUser first).
  */
 export async function updateUserSubscription(
   uid: string,
@@ -52,34 +68,43 @@ export async function updateUserSubscription(
 ): Promise<void> {
   const pool = getPool();
 
+  const setClauses: string[] = ["updated_at = NOW()"];
+  const values: unknown[] = [];
+  let paramIndex = 1;
+
+  const fieldMap: Record<string, string> = {
+    email: "email",
+    subscriptionStatus: "subscription_status",
+    stripeCustomerId: "stripe_customer_id",
+    stripeSubscriptionId: "stripe_subscription_id",
+    stripePriceId: "stripe_price_id",
+    currentPeriodEnd: "current_period_end",
+  };
+
+  for (const [key, column] of Object.entries(fieldMap)) {
+    const value = data[key as keyof typeof data];
+    if (value !== undefined) {
+      setClauses.push(`${column} = $${paramIndex}`);
+      values.push(value);
+      paramIndex++;
+    }
+  }
+
+  if (values.length === 0) return;
+
+  values.push(uid);
   await pool.query(
-    `INSERT INTO pe_users (uid, email, subscription_status, stripe_customer_id,
-                           stripe_subscription_id, stripe_price_id, current_period_end, updated_at)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
-     ON CONFLICT (uid) DO UPDATE SET
-       email = COALESCE(EXCLUDED.email, pe_users.email),
-       subscription_status = COALESCE(EXCLUDED.subscription_status, pe_users.subscription_status),
-       stripe_customer_id = COALESCE(EXCLUDED.stripe_customer_id, pe_users.stripe_customer_id),
-       stripe_subscription_id = COALESCE(EXCLUDED.stripe_subscription_id, pe_users.stripe_subscription_id),
-       stripe_price_id = COALESCE(EXCLUDED.stripe_price_id, pe_users.stripe_price_id),
-       current_period_end = COALESCE(EXCLUDED.current_period_end, pe_users.current_period_end),
-       updated_at = NOW()`,
-    [
-      uid,
-      data.email || null,
-      data.subscriptionStatus || null,
-      data.stripeCustomerId || null,
-      data.stripeSubscriptionId || null,
-      data.stripePriceId || null,
-      data.currentPeriodEnd || null,
-    ]
+    `UPDATE pe_users SET ${setClauses.join(", ")} WHERE uid = $${paramIndex}`,
+    values
   );
 }
 
 /**
  * Find a user UID by their Stripe customer ID.
  */
-export async function findUserByCustomerId(customerId: string): Promise<string | null> {
+export async function findUserByCustomerId(
+  customerId: string
+): Promise<string | null> {
   const pool = getPool();
   const result = await pool.query(
     `SELECT uid FROM pe_users WHERE stripe_customer_id = $1 LIMIT 1`,
