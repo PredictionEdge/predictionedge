@@ -15,6 +15,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://prediction-edge-frontend.vercel.app"),
   title: { default: "PredictionEdge", template: "%s — PredictionEdge" },
   description: "Real-time arbitrage across Polymarket and Kalshi.",
   openGraph: {
