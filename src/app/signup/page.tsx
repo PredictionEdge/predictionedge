@@ -56,16 +56,16 @@ export default function SignupPage() {
             placeholder="Email" className="h-10 text-sm rounded-xl bg-secondary/50 border-border/30 placeholder:text-muted-foreground/30" />
           <Input type="password" required autoComplete="new-password" minLength={8} value={password} onChange={e => setPassword(e.target.value)}
             placeholder="Password" className="h-10 text-sm rounded-xl bg-secondary/50 border-border/30 placeholder:text-muted-foreground/30" />
-          <Button type="submit" disabled={loading || authLoading} className="w-full rounded-full h-10 text-xs">
+          <Button type="submit" disabled={loading || authLoading} className="w-full rounded-full h-10 text-sm">
             {loading ? "Creating…" : "Continue"}
           </Button>
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <Separator className="flex-1 bg-border/30" /><span className="text-[11px] text-muted-foreground/20">or</span><Separator className="flex-1 bg-border/30" />
+          <Separator className="flex-1 bg-border/30" /><span className="text-xs text-muted-foreground/20">or</span><Separator className="flex-1 bg-border/30" />
         </div>
 
-        <Button variant="outline" className="w-full rounded-full h-10 text-xs border-border/30 text-muted-foreground" onClick={() => signInWithGoogle()} disabled={authLoading}>
+        <Button variant="outline" className="w-full rounded-full h-10 text-sm border-border/30 text-muted-foreground" onClick={() => signInWithGoogle()} disabled={authLoading}>
           Continue with Google
         </Button>
 

@@ -81,12 +81,12 @@ export default function ArbTable() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-spread-green)] opacity-60" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-spread-green)]" />
             </span>
-            <span className="text-[11px] text-muted-foreground/40">{lastRefresh.toLocaleTimeString()}</span>
+            <span className="text-xs text-muted-foreground/40">{lastRefresh.toLocaleTimeString()}</span>
           </div>
           <div className="flex items-center gap-0.5">
             {(["spread", "market"] as SortField[]).map(f => (
               <button key={f} onClick={() => toggleSort(f)}
-                className={`px-2 py-1 text-[11px] rounded-md capitalize transition-colors ${
+                className={`px-2 py-1 text-xs rounded-md capitalize transition-colors ${
                   sortField === f ? "text-foreground bg-secondary" : "text-muted-foreground/40 hover:text-muted-foreground"
                 }`}>
                 {f}{sortField === f && (sortDir === "desc" ? " ↓" : " ↑")}
@@ -104,22 +104,22 @@ export default function ArbTable() {
             <div className="px-5 py-4 flex items-center gap-4">
               {/* Market info */}
               <div className="flex-1 min-w-0">
-                {arb.category && <p className="text-[11px] text-muted-foreground/40 mb-0.5">{arb.category}</p>}
+                {arb.category && <p className="text-xs text-muted-foreground/40 mb-0.5">{arb.category}</p>}
                 <p className="text-sm truncate">{arb.market}</p>
-                <p className="text-[11px] text-muted-foreground/40 mt-0.5 hidden sm:block">{arb.direction}</p>
+                <p className="text-xs text-muted-foreground/40 mt-0.5 hidden sm:block">{arb.direction}</p>
               </div>
 
               {/* Prices */}
               <div className="flex items-center gap-5 shrink-0">
                 <div className="text-right hidden sm:block">
-                  <p className="text-[11px] text-[var(--color-kalshi)]/50 mb-0.5">Kalshi</p>
+                  <p className="text-xs text-[var(--color-kalshi)]/50 mb-0.5">Kalshi</p>
                   <a href={arb.kalshiUrl} target="_blank" rel="noopener noreferrer"
                     className="text-sm font-mono text-[var(--color-kalshi)] hover:underline">
                     {(arb.kalshiPrice * 100).toFixed(0)}¢
                   </a>
                 </div>
                 <div className="text-right hidden sm:block">
-                  <p className="text-[11px] text-[var(--color-poly)]/50 mb-0.5">Poly</p>
+                  <p className="text-xs text-[var(--color-poly)]/50 mb-0.5">Poly</p>
                   <a href={arb.polymarketUrl} target="_blank" rel="noopener noreferrer"
                     className="text-sm font-mono text-[var(--color-poly)] hover:underline">
                     {(arb.polymarketPrice * 100).toFixed(0)}¢

@@ -33,7 +33,7 @@ export default function Navbar() {
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
                           <Avatar className="h-6 w-6">
-                            <AvatarFallback className="text-[11px] bg-secondary text-muted-foreground">
+                            <AvatarFallback className="text-xs bg-secondary text-muted-foreground">
                               {user.email?.charAt(0).toUpperCase() || "U"}
                             </AvatarFallback>
                           </Avatar>

@@ -28,7 +28,7 @@ export default function ArbCalculator({ arb }: Props) {
         <div className="flex gap-1">
           {[100, 500, 1000, 5000].map(v => (
             <button key={v} onClick={() => setStake(v)}
-              className={`rounded-md px-2 py-1 text-[11px] transition-colors ${
+              className={`rounded-md px-2 py-1 text-xs transition-colors ${
                 stake === v ? "bg-foreground text-background" : "text-muted-foreground/40 hover:text-muted-foreground"
               }`}>${v >= 1000 ? `${v/1000}k` : v}</button>
           ))}
@@ -42,7 +42,7 @@ export default function ArbCalculator({ arb }: Props) {
         <Stat label="Profit" value={`$${actualProfit.toFixed(2)}`} sub={`${roi.toFixed(1)}%`} color="var(--color-spread-green)" />
       </div>
 
-      <p className="mt-3 text-[11px] text-muted-foreground/30 text-center">
+      <p className="mt-3 text-xs text-muted-foreground/30 text-center">
         Excludes fees and slippage
       </p>
     </div>
@@ -52,9 +52,9 @@ export default function ArbCalculator({ arb }: Props) {
 function Stat({ label, value, sub, color }: { label: string; value: string; sub?: string; color: string }) {
   return (
     <div>
-      <p className="text-[11px] text-muted-foreground/40 mb-1">{label}</p>
+      <p className="text-xs text-muted-foreground/40 mb-1">{label}</p>
       <p className="text-sm font-mono font-medium" style={{ color }}>{value}</p>
-      {sub && <p className="text-[11px] font-mono text-muted-foreground/40 mt-0.5">{sub}</p>}
+      {sub && <p className="text-xs font-mono text-muted-foreground/40 mt-0.5">{sub}</p>}
     </div>
   );
 }

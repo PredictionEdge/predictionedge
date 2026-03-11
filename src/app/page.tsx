@@ -14,7 +14,7 @@ export default function Home() {
           Compare Polymarket and Kalshi side-by-side. Find price gaps. Calculate guaranteed profit.
         </p>
         <div className="mt-8 flex items-center gap-3">
-          <Button asChild size="sm" className="rounded-full h-9 px-5 text-xs">
+          <Button asChild size="sm" className="rounded-full h-9 px-5 text-sm">
             <Link href="/signup">Get started</Link>
           </Button>
           <Button asChild variant="ghost" size="sm" className="text-xs text-muted-foreground">
@@ -33,7 +33,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-spread-green)] opacity-60" />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-spread-green)]" />
               </span>
-              <span className="text-[11px] text-muted-foreground/60">Live</span>
+              <span className="text-xs text-muted-foreground/60">Live</span>
             </div>
           </div>
           <div className="divide-y divide-border/30">
@@ -84,11 +84,11 @@ function DemoRow({ market, kalshi, poly, spread }: { market: string; kalshi: num
       </div>
       <div className="flex items-center gap-6 shrink-0">
         <div className="text-right">
-          <p className="text-[11px] text-[var(--color-kalshi)]/60 mb-0.5">Kalshi</p>
+          <p className="text-xs text-[var(--color-kalshi)]/60 mb-0.5">Kalshi</p>
           <p className="text-sm font-mono">{kalshi}¢</p>
         </div>
         <div className="text-right">
-          <p className="text-[11px] text-[var(--color-poly)]/60 mb-0.5">Poly</p>
+          <p className="text-xs text-[var(--color-poly)]/60 mb-0.5">Poly</p>
           <p className="text-sm font-mono">{poly}¢</p>
         </div>
         <div className="w-14 text-right">
