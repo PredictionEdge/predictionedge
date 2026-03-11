@@ -67,7 +67,7 @@ export async function updateUserSubscription(
     [
       uid,
       data.email || null,
-      data.subscriptionStatus || null,
+      data.subscriptionStatus || "none",
       data.stripeCustomerId || null,
       data.stripeSubscriptionId || null,
       data.stripePriceId || null,
