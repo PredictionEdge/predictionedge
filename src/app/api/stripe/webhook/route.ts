@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe/client";
-import { updateUserSubscription, findUserByCustomerId } from "@/lib/stripe/subscription";
+import { ensureUser, updateUserSubscription, findUserByCustomerId } from "@/lib/stripe/subscription";
 
 export const runtime = "nodejs";
 
@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
         const uid = await resolveUid(subscription);
         if (!uid) { console.error("No UID for subscription:", subscription.id); break; }
         const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
+        await ensureUser(uid);
         await updateUserSubscription(uid, {
           subscriptionStatus: subscription.status,
           stripeCustomerId: customerId,
