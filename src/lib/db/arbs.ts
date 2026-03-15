@@ -35,6 +35,9 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       poly_slug,
       kalshi_url,
       poly_url,
+      kalshi_l1_size,
+      poly_l1_size,
+      max_size_dollars,
       snapshot_at
     FROM arb_snapshot
     WHERE net_spread_pct > 0
@@ -60,6 +63,9 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       spread: parseFloat(row.net_spread_pct) * 100,
       kalshiUrl,
       polymarketUrl,
+      kalshiL1Size: parseFloat(row.kalshi_l1_size) || 0,
+      polyL1Size: parseFloat(row.poly_l1_size) || 0,
+      maxSize: parseFloat(row.max_size_dollars) || 0,
       direction: isKalshiYes
         ? "Buy YES on Kalshi, Buy NO on Polymarket"
         : "Buy NO on Kalshi, Buy YES on Polymarket",

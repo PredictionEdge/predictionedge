@@ -48,6 +48,9 @@ export interface ArbWithSpread {
   kalshiUrl: string;
   polymarketUrl: string;
   direction: string; // e.g. "Buy YES on Kalshi, Buy NO on Polymarket"
+  kalshiL1Size: number;
+  polyL1Size: number;
+  maxSize: number;
   expiration: string | null;
   updatedAt: string;
 }

@@ -91,7 +91,7 @@ export default function ArbTable() {
                 <p className="text-sm truncate">{arb.market}</p>
                 <p className="text-xs text-muted-foreground/70 mt-0.5 hidden sm:block">{arb.direction}</p>
               </div>
-              <div className="flex items-center gap-5 shrink-0">
+              <div className="flex items-center gap-4 shrink-0">
                 <div className="text-right hidden sm:block">
                   <p className="text-xs text-[var(--color-kalshi)]/50 mb-0.5">Kalshi</p>
                   <a href={arb.kalshiUrl} target="_blank" rel="noopener noreferrer"
@@ -106,6 +106,14 @@ export default function ArbTable() {
                     {(arb.polymarketPrice * 100).toFixed(0)}¢
                   </a>
                 </div>
+                {arb.maxSize > 0 && (
+                  <div className="text-right hidden md:block">
+                    <p className="text-xs text-muted-foreground/50 mb-0.5">Size</p>
+                    <span className="text-sm font-mono text-muted-foreground">
+                      {arb.maxSize >= 1000 ? `${(arb.maxSize / 1000).toFixed(1)}k` : Math.floor(arb.maxSize)}
+                    </span>
+                  </div>
+                )}
                 <div className="w-14 text-right">
                   <span className="text-sm font-mono text-[var(--color-spread-green)]">
                     +{arb.spread.toFixed(1)}%
