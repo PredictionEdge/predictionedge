@@ -166,8 +166,8 @@ export default function TermsPage() {
         <h2>18. Contact</h2>
         <p>
           For questions about these Terms, contact us at{" "}
-          <a href="mailto:legal@predictionedge.com" className="text-foreground underline underline-offset-2 hover:text-foreground/80">
-            legal@predictionedge.com
+          <a href="mailto:support@predictionedge.win" className="text-foreground underline underline-offset-2 hover:text-foreground/80">
+            support@predictionedge.win
           </a>.
         </p>
       </div>
