@@ -17,17 +17,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Beta allowlist — temporarily disabled for testing
-    // const ALLOWED_EMAILS = ["support@predictionedge.win"];
-    // if (!ALLOWED_EMAILS.includes(user.email ?? "")) {
-    //   return NextResponse.json({
-    //     arbs: [],
-    //     total: 0,
-    //     isPaid: false,
-    //     limited: false,
-    //     message: "Access coming soon. You're on the waitlist.",
-    //   });
-    // }
+    // Beta allowlist — only approved users can see arb data
+    const ALLOWED_EMAILS = ["support@predictionedge.win"];
+    if (!ALLOWED_EMAILS.includes(user.email ?? "")) {
+      return NextResponse.json({
+        arbs: [],
+        total: 0,
+        isPaid: false,
+        limited: false,
+        message: "Access coming soon. You're on the waitlist.",
+      });
+    }
 
     const arbs = await getActiveArbs();
 
