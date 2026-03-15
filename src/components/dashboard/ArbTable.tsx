@@ -94,7 +94,7 @@ export default function ArbTable() {
       </div>
 
       {/* List */}
-      <div className="rounded-2xl border border-border/40 overflow-hidden divide-y divide-border/50">
+      <div className="rounded-2xl border border-border/40 overflow-visible divide-y divide-border/50">
         {filtered.map(arb => (
           <div key={arb.id}
             className={`transition-colors ${selectedArb?.id === arb.id ? "bg-secondary/50" : "hover:bg-secondary/30"}`}>
@@ -171,7 +171,7 @@ export default function ArbTable() {
 
 function LoadingSkeleton() {
   return (
-    <div className="rounded-2xl border border-border/40 overflow-hidden divide-y divide-border/50">
+    <div className="rounded-2xl border border-border/40 overflow-visible divide-y divide-border/50">
       {Array.from({ length: 5 }).map((_, i) => (
         <div key={i} className="px-5 py-4 flex items-center gap-4">
           <div className="flex-1"><Skeleton className="h-4 w-3/4" /></div>
