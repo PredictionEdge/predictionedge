@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArbWithSpread } from "@/lib/db/types";
 import { Input } from "@/components/ui/input";
+import InfoTooltip from "@/components/ui/info-tooltip";
 
 interface Props { arb: ArbWithSpread; onClose: () => void; }
 
@@ -60,7 +61,7 @@ export default function ArbCalculator({ arb }: Props) {
           </div>
           <div className="space-y-1.5">
             <div className="flex justify-between items-baseline">
-              <span className="text-xs text-muted-foreground/60">Gross profit</span>
+              <span className="text-xs text-muted-foreground/60 flex items-center gap-1">Gross profit <InfoTooltip text="Raw profit per contract before any platform fees. Calculated as $1 payout minus combined cost on both platforms." /></span>
               <span className="font-mono text-sm">{(rawProfitPerContract * 100).toFixed(2)}¢</span>
             </div>
             <div className="flex justify-between items-baseline">
@@ -68,7 +69,7 @@ export default function ArbCalculator({ arb }: Props) {
               <span className="font-mono text-sm text-red-400/70">−{(feesPerContract * 100).toFixed(2)}¢</span>
             </div>
             <div className="border-t border-border/30 pt-1.5 flex justify-between items-baseline">
-              <span className="text-xs text-muted-foreground/60">Net profit</span>
+              <span className="text-xs text-muted-foreground/60 flex items-center gap-1">Net profit <InfoTooltip text="Profit per contract after Kalshi and Polymarket taker fees are deducted. This is what you actually keep per contract." /></span>
               <span className="font-mono text-sm text-[var(--color-spread-green)]">
                 {(netProfitPerContract * 100).toFixed(2)}¢
               </span>
@@ -81,7 +82,7 @@ export default function ArbCalculator({ arb }: Props) {
       {arb.maxSize > 0 && (
         <div className="rounded-lg border border-[var(--color-spread-green)]/20 bg-[var(--color-spread-green)]/5 p-3">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-medium text-[var(--color-spread-green)]">Available now at best price</span>
+            <span className="text-xs font-medium text-[var(--color-spread-green)] flex items-center gap-1">Available now at best price <InfoTooltip text="Maximum contracts you can execute right now at the current best ask on both platforms. Limited by the thinner side of the book. Larger orders will fill at worse prices." /></span>
           </div>
           <div className="grid grid-cols-3 gap-3 mt-2">
             <div>
@@ -93,7 +94,7 @@ export default function ArbCalculator({ arb }: Props) {
               <p className="font-mono text-sm">${l1Cost.toFixed(0)}</p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground/60 mb-0.5">Profit (after fees)</p>
+              <p className="text-xs text-muted-foreground/60 mb-0.5 flex items-center gap-1">Profit <InfoTooltip text="Total profit if you fill all available contracts at the current best price. Includes both platform fees. Does not account for slippage if the book moves before execution." /></p>
               <p className="font-mono text-sm text-[var(--color-spread-green)]">${l1Profit.toFixed(2)}</p>
             </div>
           </div>
@@ -126,7 +127,7 @@ export default function ArbCalculator({ arb }: Props) {
           <Stat label="Kalshi" value={`$${(totalCost > 0 ? (arb.kalshiPrice / totalCost) * stake : 0).toFixed(0)}`} color="var(--color-kalshi)" />
           <Stat label="Polymarket" value={`$${(totalCost > 0 ? (arb.polymarketPrice / totalCost) * stake : 0).toFixed(0)}`} color="var(--color-poly)" />
           <Stat label="Contracts" value={contracts.toLocaleString()} />
-          <Stat label="Profit" value={`$${customProfit.toFixed(2)}`} sub={`${customRoi.toFixed(1)}% ROI`} color="var(--color-spread-green)" />
+          <Stat label="Profit ℹ" value={`$${customProfit.toFixed(2)}`} sub={`${customRoi.toFixed(1)}% ROI`} color="var(--color-spread-green)" tooltip="Estimated profit at the current best price. If your stake exceeds L1 depth, actual profit will be lower due to slippage into worse price levels." />
         </div>
         {contracts > l1Contracts && l1Contracts > 0 && (
           <p className="mt-2 text-[10px] text-yellow-400/70 text-center">
@@ -142,10 +143,10 @@ export default function ArbCalculator({ arb }: Props) {
   );
 }
 
-function Stat({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
+function Stat({ label, value, sub, color, tooltip }: { label: string; value: string; sub?: string; color?: string; tooltip?: string }) {
   return (
     <div>
-      <p className="text-xs text-muted-foreground/60 mb-0.5">{label}</p>
+      <p className="text-xs text-muted-foreground/60 mb-0.5 flex items-center justify-center gap-1">{label} {tooltip && <InfoTooltip text={tooltip} />}</p>
       <p className="text-sm font-mono font-medium" style={color ? { color } : {}}>{value}</p>
       {sub && <p className="text-[10px] font-mono text-muted-foreground/60 mt-0.5">{sub}</p>}
     </div>

@@ -5,6 +5,7 @@ import { ArbWithSpread } from "@/lib/db/types";
 import { useArbs } from "@/lib/hooks/useArbs";
 import ArbCalculator from "./ArbCalculator";
 import { Skeleton } from "@/components/ui/skeleton";
+import InfoTooltip from "@/components/ui/info-tooltip";
 import { Button } from "@/components/ui/button";
 
 type SortField = "spread" | "market" | "category";
@@ -114,10 +115,11 @@ export default function ArbTable() {
                     </span>
                   </div>
                 )}
-                <div className="w-14 text-right">
+                <div className="w-20 text-right flex items-center justify-end gap-1">
                   <span className="text-sm font-mono text-[var(--color-spread-green)]">
                     +{arb.spread.toFixed(1)}%
                   </span>
+                  <InfoTooltip text="Net spread after platform fees on both sides. This is the theoretical profit per $1 of contracts, assuming execution at the current best price. Actual returns depend on fill quality and slippage." />
                 </div>
                 <button
                   onClick={() => setSelectedArb(selectedArb?.id === arb.id ? null : arb)}
