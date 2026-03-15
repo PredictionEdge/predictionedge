@@ -11,9 +11,12 @@ export default function Home() {
           See the spread between markets.
         </h1>
         <p className="mt-4 text-base text-muted-foreground max-w-lg leading-relaxed">
-          Compare Polymarket and Kalshi side-by-side. Find price gaps. Calculate guaranteed profit.
+          Compare Polymarket and Kalshi side-by-side. Find price gaps. Calculate potential profit after fees.
         </p>
-        <div className="mt-8 flex items-center gap-3">
+        <p className="mt-4 text-xs text-muted-foreground/50">
+          Trading involves risk. Spreads are not guaranteed. <a href="/terms" className="underline hover:text-muted-foreground">Read our terms</a>.
+        </p>
+        <div className="mt-6 flex items-center gap-3">
           <Button asChild size="sm" className="rounded-full h-9 px-5 text-sm">
             <Link href="/signup">Get started</Link>
           </Button>
@@ -47,7 +50,7 @@ export default function Home() {
       {/* Features */}
       <section className="pb-24 grid sm:grid-cols-3 gap-8">
         <Feature title="Split view" text="Same market, two platforms. Kalshi on the left, Polymarket on the right. Compare instantly." />
-        <Feature title="Calculator" text="Enter your stake. See allocation, contracts, and guaranteed profit — before you trade." />
+        <Feature title="Calculator" text="Enter your stake. See allocation, contracts, and estimated profit after fees — before you trade." />
         <Feature title="Real-time" text="Auto-refresh every 30 seconds. Never miss a spread." />
       </section>
 

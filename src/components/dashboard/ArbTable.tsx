@@ -27,8 +27,20 @@ export default function ArbTable() {
   );
   if (!data?.arbs.length) return (
     <div className="rounded-2xl border border-border/40 p-16 text-center">
-      <p className="text-sm text-muted-foreground">No opportunities right now</p>
-      <p className="text-xs text-muted-foreground/70 mt-1">Check back soon</p>
+      {data?.message ? (
+        <>
+          <p className="text-sm text-muted-foreground">🔒 Early access</p>
+          <p className="text-xs text-muted-foreground/70 mt-2 max-w-xs mx-auto">{data.message}</p>
+          <p className="text-xs text-muted-foreground/50 mt-4">
+            Questions? <a href="mailto:support@predictionedge.win" className="text-foreground hover:underline">support@predictionedge.win</a>
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="text-sm text-muted-foreground">No opportunities right now</p>
+          <p className="text-xs text-muted-foreground/70 mt-1">Check back soon</p>
+        </>
+      )}
     </div>
   );
 
