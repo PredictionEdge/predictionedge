@@ -14,5 +14,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/((?!_next/static|_next/image|favicon.ico).*)",
+  // Only match page routes, not API routes (POST redirects break form submissions)
+  matcher: "/((?!_next/static|_next/image|favicon.ico|api/).*)",
 };
