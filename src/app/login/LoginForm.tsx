@@ -33,29 +33,29 @@ export default function LoginForm() {
     <div className="flex min-h-[60vh] items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <h1 className="text-lg font-medium mb-1">Sign in</h1>
-        <p className="text-xs text-muted-foreground/40 mb-8">Welcome back</p>
+        <p className="text-xs text-muted-foreground/70 mb-8">Welcome back</p>
 
         {error && <p className="text-xs text-destructive mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <Input type="email" required autoComplete="email" value={email} onChange={e => setEmail(e.target.value)}
-            placeholder="Email" className="h-10 text-sm rounded-xl bg-secondary/50 border-border/30 placeholder:text-muted-foreground/30" />
+            placeholder="Email" className="h-10 text-sm rounded-xl bg-secondary/50 border-border/40 placeholder:text-muted-foreground/50" />
           <Input type="password" required autoComplete="current-password" minLength={8} value={password} onChange={e => setPassword(e.target.value)}
-            placeholder="Password" className="h-10 text-sm rounded-xl bg-secondary/50 border-border/30 placeholder:text-muted-foreground/30" />
+            placeholder="Password" className="h-10 text-sm rounded-xl bg-secondary/50 border-border/40 placeholder:text-muted-foreground/50" />
           <Button type="submit" disabled={loading || authLoading} className="w-full rounded-full h-10 text-sm">
             {loading ? "Signing in…" : "Continue"}
           </Button>
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <Separator className="flex-1 bg-border/30" /><span className="text-xs text-muted-foreground/20">or</span><Separator className="flex-1 bg-border/30" />
+          <Separator className="flex-1 bg-border/30" /><span className="text-xs text-muted-foreground/50">or</span><Separator className="flex-1 bg-border/30" />
         </div>
 
-        <Button variant="outline" className="w-full rounded-full h-10 text-sm border-border/30 text-muted-foreground" onClick={() => signInWithGoogle()} disabled={authLoading}>
+        <Button variant="outline" className="w-full rounded-full h-10 text-sm border-border/40 text-muted-foreground" onClick={() => signInWithGoogle()} disabled={authLoading}>
           Continue with Google
         </Button>
 
-        <p className="mt-8 text-center text-xs text-muted-foreground/30">
+        <p className="mt-8 text-center text-xs text-muted-foreground/60">
           No account? <Link href="/signup" className="text-muted-foreground hover:text-foreground transition-colors">Sign up</Link>
         </p>
       </div>

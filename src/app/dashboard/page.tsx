@@ -5,6 +5,7 @@ import ManageSubscription from "@/components/dashboard/ManageSubscription";
 import StatsBar from "@/components/dashboard/StatsBar";
 import ArbTable from "@/components/dashboard/ArbTable";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import RiskBanner from "@/components/RiskBanner";
 
 export default async function Dashboard() {
   const user = await getCurrentUser();
@@ -22,6 +23,7 @@ export default async function Dashboard() {
           <SignOutButton />
         </div>
       </div>
+      <RiskBanner />
       <ErrorBoundary>
         <StatsBar />
         <ArbTable />
