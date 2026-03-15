@@ -36,7 +36,7 @@ export default function Home() {
               <span className="text-xs text-muted-foreground/60">Live</span>
             </div>
           </div>
-          <div className="divide-y divide-border/30">
+          <div className="divide-y divide-border/50">
             <DemoRow market="Will BTC hit $150k by Dec 2025?" kalshi={42} poly={46} spread={4.2} />
             <DemoRow market="Next Fed rate decision — hold?" kalshi={71} poly={68} spread={3.1} />
             <DemoRow market="US recession by end of 2026?" kalshi={28} poly={25} spread={2.8} />

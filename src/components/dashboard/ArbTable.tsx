@@ -27,7 +27,7 @@ export default function ArbTable() {
   if (!data?.arbs.length) return (
     <div className="rounded-2xl border border-border/40 p-16 text-center">
       <p className="text-sm text-muted-foreground">No opportunities right now</p>
-      <p className="text-xs text-muted-foreground/40 mt-1">Check back soon</p>
+      <p className="text-xs text-muted-foreground/70 mt-1">Check back soon</p>
     </div>
   );
 
@@ -65,13 +65,13 @@ export default function ArbTable() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-spread-green)] opacity-60" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-spread-green)]" />
             </span>
-            <span className="text-xs text-muted-foreground/40">{lastRefresh.toLocaleTimeString()}</span>
+            <span className="text-xs text-muted-foreground/70">{lastRefresh.toLocaleTimeString()}</span>
           </div>
           <div className="flex items-center gap-0.5">
             {(["spread", "market"] as SortField[]).map(f => (
               <button key={f} onClick={() => toggleSort(f)}
                 className={`px-2 py-1 text-xs rounded-md capitalize transition-colors ${
-                  sortField === f ? "text-foreground bg-secondary" : "text-muted-foreground/40 hover:text-muted-foreground"
+                  sortField === f ? "text-foreground bg-secondary" : "text-muted-foreground/70 hover:text-muted-foreground"
                 }`}>
                 {f}{sortField === f && (sortDir === "desc" ? " ↓" : " ↑")}
               </button>
@@ -81,15 +81,15 @@ export default function ArbTable() {
       </div>
 
       {/* List */}
-      <div className="rounded-2xl border border-border/40 overflow-hidden divide-y divide-border/30">
+      <div className="rounded-2xl border border-border/40 overflow-hidden divide-y divide-border/50">
         {filtered.map(arb => (
           <div key={arb.id}
             className={`transition-colors ${selectedArb?.id === arb.id ? "bg-secondary/50" : "hover:bg-secondary/30"}`}>
             <div className="px-5 py-4 flex items-center gap-4">
               <div className="flex-1 min-w-0">
-                {arb.category && <p className="text-xs text-muted-foreground/40 mb-0.5">{arb.category}</p>}
+                {arb.category && <p className="text-xs text-muted-foreground/70 mb-0.5">{arb.category}</p>}
                 <p className="text-sm truncate">{arb.market}</p>
-                <p className="text-xs text-muted-foreground/40 mt-0.5 hidden sm:block">{arb.direction}</p>
+                <p className="text-xs text-muted-foreground/70 mt-0.5 hidden sm:block">{arb.direction}</p>
               </div>
               <div className="flex items-center gap-5 shrink-0">
                 <div className="text-right hidden sm:block">
@@ -116,7 +116,7 @@ export default function ArbTable() {
                   className={`h-7 w-7 rounded-full flex items-center justify-center text-xs transition-colors ${
                     selectedArb?.id === arb.id
                       ? "bg-foreground text-background"
-                      : "text-muted-foreground/30 hover:text-muted-foreground"
+                      : "text-muted-foreground/60 hover:text-muted-foreground"
                   }`}>
                   {selectedArb?.id === arb.id ? "×" : "→"}
                 </button>
@@ -149,7 +149,7 @@ export default function ArbTable() {
 
 function LoadingSkeleton() {
   return (
-    <div className="rounded-2xl border border-border/40 overflow-hidden divide-y divide-border/30">
+    <div className="rounded-2xl border border-border/40 overflow-hidden divide-y divide-border/50">
       {Array.from({ length: 5 }).map((_, i) => (
         <div key={i} className="px-5 py-4 flex items-center gap-4">
           <div className="flex-1"><Skeleton className="h-4 w-3/4" /></div>

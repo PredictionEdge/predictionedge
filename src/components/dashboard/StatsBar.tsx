@@ -12,7 +12,7 @@ export default function StatsBar() {
   const max = Math.max(...spreads);
 
   return (
-    <div className="flex items-center gap-6 mb-6 text-xs text-muted-foreground/40">
+    <div className="flex items-center gap-6 mb-6 text-xs text-muted-foreground/70">
       <span>
         <span className="text-foreground font-mono">{data.total}</span> opportunities
       </span>

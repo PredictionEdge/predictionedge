@@ -16,7 +16,7 @@ export default async function Dashboard() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-lg font-medium">Dashboard</h1>
-          <p className="text-xs text-muted-foreground/40 mt-0.5">{user.email}</p>
+          <p className="text-xs text-muted-foreground/70 mt-0.5">{user.email}</p>
         </div>
         <div className="flex items-center gap-1">
           <ManageSubscription />

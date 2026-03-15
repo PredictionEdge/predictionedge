@@ -48,7 +48,7 @@ export default function LoginForm() {
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <Separator className="flex-1 bg-border/30" /><span className="text-xs text-muted-foreground/50">or</span><Separator className="flex-1 bg-border/30" />
+          <Separator className="flex-1 bg-border/50" /><span className="text-xs text-muted-foreground/50">or</span><Separator className="flex-1 bg-border/50" />
         </div>
 
         <Button variant="outline" className="w-full rounded-full h-10 text-sm border-border/40 text-muted-foreground" onClick={() => signInWithGoogle()} disabled={authLoading}>
