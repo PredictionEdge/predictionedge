@@ -8,6 +8,7 @@ interface ArbsResponse {
   total: number;
   isPaid: boolean;
   limited: boolean;
+  totalArbValue: number;
   message?: string;
 }
 

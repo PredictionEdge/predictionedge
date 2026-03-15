@@ -121,9 +121,20 @@ export default function ArbTable() {
                 </div>
                 {arb.maxSize > 0 && (
                   <div className="text-right hidden md:block">
-                    <p className="text-xs text-muted-foreground/50 mb-0.5">Size</p>
+                    <p className="text-xs text-muted-foreground/50 mb-0.5">L1 Size</p>
                     <span className="text-sm font-mono text-muted-foreground">
                       {arb.maxSize >= 1000 ? `${(arb.maxSize / 1000).toFixed(1)}k` : Math.floor(arb.maxSize)}
+                    </span>
+                    {arb.totalDepth > arb.maxSize && (
+                      <p className="text-[10px] text-muted-foreground/50">{arb.totalDepth} total</p>
+                    )}
+                  </div>
+                )}
+                {arb.totalArbValue > 0 && (
+                  <div className="text-right hidden lg:block">
+                    <p className="text-xs text-muted-foreground/50 mb-0.5">Value</p>
+                    <span className="text-sm font-mono text-[var(--color-spread-green)]">
+                      ${arb.totalArbValue.toFixed(2)}
                     </span>
                   </div>
                 )}
@@ -146,6 +157,26 @@ export default function ArbTable() {
             </div>
             {selectedArb?.id === arb.id && (
               <div className="px-5 pb-4">
+                {arb.depthLevels.length > 0 && (
+                  <div className="mb-4 rounded-lg bg-secondary/30 p-3">
+                    <p className="text-xs font-medium text-muted-foreground mb-2">
+                      Depth Breakdown · {arb.depthLevels.reduce((s, l) => s + l.size, 0)} contracts · ${arb.totalArbValue.toFixed(2)} total
+                    </p>
+                    <div className="space-y-1">
+                      {arb.depthLevels.map((level, i) => (
+                        <div key={i} className="flex items-center justify-between text-xs font-mono">
+                          <span className="text-muted-foreground">
+                            {level.size} @ K:{(level.kalshi_price * 100).toFixed(0)}¢ P:{(level.poly_price * 100).toFixed(0)}¢
+                          </span>
+                          <span className="flex items-center gap-3">
+                            <span className="text-[var(--color-spread-green)]">+{level.spread_pct.toFixed(1)}%</span>
+                            <span className="text-muted-foreground/70">${level.value.toFixed(2)}</span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <ArbCalculator arb={arb} onClose={() => setSelectedArb(null)} />
               </div>
             )}
@@ -154,14 +185,19 @@ export default function ArbTable() {
       </div>
 
       {data.limited && (
-        <div className="mt-4 text-center">
+        <div className="mt-4 text-center space-y-1">
+          {data.totalArbValue > 0 && (
+            <p className="text-sm font-mono text-[var(--color-spread-green)]">
+              ${data.totalArbValue.toFixed(2)} in arbitrage available right now
+            </p>
+          )}
           <p className="text-xs text-muted-foreground">
-            {data.arbs.length} of {data.total} shown ·{" "}
+            Showing {data.arbs.length} of {data.total} opportunities ·{" "}
             <button onClick={async () => {
               const res = await fetch("/api/stripe/checkout", { method: "POST" });
               const d = await res.json();
               if (d.url) window.location.href = d.url;
-            }} className="text-foreground hover:underline">Unlock all</button>
+            }} className="text-foreground hover:underline">Unlock all →</button>
           </p>
         </div>
       )}

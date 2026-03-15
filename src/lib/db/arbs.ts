@@ -1,5 +1,5 @@
 import { getPool } from "./index";
-import { ArbWithSpread } from "./types";
+import { ArbWithSpread, DepthLevel } from "./types";
 
 /**
  * Query active arbitrage opportunities from the arb_snapshot table.
@@ -38,6 +38,8 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       kalshi_l1_size,
       poly_l1_size,
       max_size_dollars,
+      COALESCE(total_arb_value, 0) as total_arb_value,
+      depth_levels,
       snapshot_at
     FROM arb_snapshot
     WHERE net_spread_pct > 0
@@ -51,6 +53,19 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
 
     const kalshiUrl = row.kalshi_url || `https://kalshi.com/markets/${row.kalshi_event_ticker}`;
     const polymarketUrl = row.poly_url || (row.poly_slug ? `https://polymarket.com/event/${row.poly_slug}` : "");
+
+    // Parse depth_levels from JSONB
+    let depthLevels: DepthLevel[] = [];
+    try {
+      if (row.depth_levels) {
+        depthLevels = typeof row.depth_levels === "string"
+          ? JSON.parse(row.depth_levels)
+          : row.depth_levels;
+      }
+    } catch { /* ignore parse errors */ }
+
+    // Compute total depth (sum of sizes across all levels)
+    const totalDepth = depthLevels.reduce((sum, l) => sum + l.size, 0);
 
     return {
       id: row.id,
@@ -69,6 +84,9 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       kalshiL1Size: parseFloat(row.kalshi_l1_size) || 0,
       polyL1Size: parseFloat(row.poly_l1_size) || 0,
       maxSize: parseFloat(row.max_size_dollars) || 0,
+      totalArbValue: parseFloat(row.total_arb_value) || 0,
+      depthLevels,
+      totalDepth,
       direction: isKalshiYes
         ? "Buy YES on Kalshi, Buy NO on Polymarket"
         : "Buy NO on Kalshi, Buy YES on Polymarket",

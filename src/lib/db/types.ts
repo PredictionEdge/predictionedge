@@ -36,6 +36,15 @@ export interface PolymarketMarketData {
   endDate: string | null;
 }
 
+
+export interface DepthLevel {
+  spread_pct: number;
+  size: number;
+  value: number;
+  kalshi_price: number;
+  poly_price: number;
+}
+
 export interface ArbWithSpread {
   id: string;
   market: string;
@@ -55,6 +64,9 @@ export interface ArbWithSpread {
   polyL1Size: number;
   maxSize: number;
   expiration: string | null;
+  totalArbValue: number;
+  depthLevels: DepthLevel[];
+  totalDepth: number;
   updatedAt: string;
   stale?: boolean;
 }

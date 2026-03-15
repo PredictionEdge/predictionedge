@@ -34,9 +34,16 @@ export async function GET(request: NextRequest) {
     const sub = await getUserSubscription(user.uid);
     const isPaid = isSubscriptionActive(sub);
 
+    // Total arb value across all opportunities
+    const totalArbValue = arbs.reduce((sum, a) => sum + a.totalArbValue, 0);
+
+    // Free users see 3 worst arbs (sorted ascending by spread)
+    const freeArbs = [...arbs].sort((a, b) => a.spread - b.spread).slice(0, FREE_LIMIT);
+
     return NextResponse.json({
-      arbs: isPaid ? arbs : arbs.slice(0, FREE_LIMIT),
+      arbs: isPaid ? arbs : freeArbs,
       total: arbs.length,
+      totalArbValue: Math.round(totalArbValue * 100) / 100,
       isPaid,
       limited: !isPaid && arbs.length > FREE_LIMIT,
     });
