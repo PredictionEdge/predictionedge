@@ -97,11 +97,11 @@ export default function ArbTable() {
       <div className="rounded-2xl border border-border/40 overflow-visible divide-y divide-border/50">
         {filtered.map(arb => (
           <div key={arb.id}
-            className={`transition-colors ${selectedArb?.id === arb.id ? "bg-secondary/50" : "hover:bg-secondary/30"}`}>
+            className={`transition-colors ${arb.stale ? "opacity-50" : ""} ${selectedArb?.id === arb.id ? "bg-secondary/50" : "hover:bg-secondary/30"}`}>
             <div className="px-5 py-4 flex items-center gap-4">
               <div className="flex-1 min-w-0">
                 {arb.category && <p className="text-xs text-muted-foreground/70 mb-0.5">{arb.category}</p>}
-                <p className="text-sm truncate">{arb.market}</p>
+                <p className="text-sm truncate">{arb.market}{arb.stale && <span className="ml-2 text-xs text-amber-500/80">⚠ Stale</span>}</p>
                 <p className="text-xs text-muted-foreground/70 mt-0.5 hidden sm:block">{arb.direction}</p>
               </div>
               <div className="flex items-center gap-4 shrink-0">

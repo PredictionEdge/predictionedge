@@ -56,4 +56,5 @@ export interface ArbWithSpread {
   maxSize: number;
   expiration: string | null;
   updatedAt: string;
+  stale?: boolean;
 }

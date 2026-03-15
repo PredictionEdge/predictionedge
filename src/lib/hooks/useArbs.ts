@@ -26,6 +26,32 @@ let inflightPromise: Promise<ArbsResponse> | null = null;
 const CACHE_TTL = 5_000; // 5s dedup window
 const listeners = new Set<() => void>();
 
+// Keep previous arbs for soft-stale merge
+let previousArbs: ArbWithSpread[] = [];
+
+const STALE_EXPIRY_MS = 15 * 60 * 1000; // 15 minutes
+
+function mergeWithStale(fresh: ArbWithSpread[]): ArbWithSpread[] {
+  const freshIds = new Set(fresh.map((a) => a.kalshiTicker));
+  const now = Date.now();
+
+  // Keep previously-seen arbs that vanished, mark as stale
+  const staleArbs = previousArbs
+    .filter((a) => !freshIds.has(a.kalshiTicker))
+    .filter((a) => {
+      // Drop stale arbs older than STALE_EXPIRY_MS
+      const updatedAt = new Date(a.updatedAt).getTime();
+      return now - updatedAt < STALE_EXPIRY_MS;
+    })
+    .map((a) => ({ ...a, stale: true }));
+
+  // Update previousArbs to include all current (fresh + surviving stale)
+  const merged = [...fresh, ...staleArbs];
+  previousArbs = merged;
+
+  return merged;
+}
+
 function notifyListeners() {
   listeners.forEach((fn) => fn());
 }
@@ -41,11 +67,13 @@ async function fetchArbs(): Promise<ArbsResponse> {
       return res.json();
     })
     .then((json: ArbsResponse) => {
-      cachedData = json;
+      // Merge fresh arbs with stale ones
+      const merged = mergeWithStale(json.arbs);
+      cachedData = { ...json, arbs: merged };
       cacheTime = Date.now();
       inflightPromise = null;
       notifyListeners();
-      return json;
+      return cachedData;
     })
     .catch((err) => {
       inflightPromise = null;
