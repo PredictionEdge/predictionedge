@@ -44,7 +44,7 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
     const dir = row.direction as string;
     const isKalshiYes = dir === "kalshi_yes_poly_no";
 
-    const kalshiUrl = `https://kalshi.com/markets/${row.kalshi_event_ticker}`;
+    const kalshiUrl = `https://kalshi.com/markets/${row.kalshi_event_ticker}#${row.kalshi_market_ticker}`;
     const polymarketUrl = row.poly_slug
       ? `https://polymarket.com/event/${row.poly_slug}`
       : "";
