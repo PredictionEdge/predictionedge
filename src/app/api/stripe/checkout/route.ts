@@ -4,11 +4,12 @@ import { getCurrentUser } from "@/lib/auth/get-user";
 import { ensureUser, getUserSubscription, updateUserSubscription } from "@/lib/stripe/subscription";
 
 export async function POST(request: NextRequest) {
-  // CSRF: verify request comes from our own origin
+  // CSRF: verify request comes from our own origin (allow both apex and www)
   const origin = request.headers.get("origin");
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const allowedOrigin = new URL(appUrl).origin;
-  if (origin && origin !== allowedOrigin) {
+  const allowedWww = allowedOrigin.replace("://", "://www.");
+  if (origin && origin !== allowedOrigin && origin !== allowedWww) {
     console.error(`CSRF blocked: origin=${origin} expected=${allowedOrigin}`);
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
