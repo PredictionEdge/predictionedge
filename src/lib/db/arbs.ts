@@ -33,6 +33,8 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       poly_fee,
       kalshi_title,
       poly_slug,
+      kalshi_url,
+      poly_url,
       snapshot_at
     FROM arb_snapshot
     WHERE net_spread_pct > 0
@@ -44,10 +46,8 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
     const dir = row.direction as string;
     const isKalshiYes = dir === "kalshi_yes_poly_no";
 
-    const kalshiUrl = `https://kalshi.com/markets/${row.kalshi_event_ticker}#${row.kalshi_market_ticker}`;
-    const polymarketUrl = row.poly_slug
-      ? `https://polymarket.com/event/${row.poly_slug}`
-      : "";
+    const kalshiUrl = row.kalshi_url || `https://kalshi.com/markets/${row.kalshi_event_ticker}`;
+    const polymarketUrl = row.poly_url || (row.poly_slug ? `https://polymarket.com/event/${row.poly_slug}` : "");
 
     return {
       id: row.id,
