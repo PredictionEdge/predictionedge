@@ -102,6 +102,7 @@ export default function ArbTable() {
               <div className="flex-1 min-w-0">
                 {arb.category && <p className="text-xs text-muted-foreground/70 mb-0.5">{arb.category}</p>}
                 <p className="text-sm truncate">{arb.market}{arb.stale && <span className="ml-2 text-xs text-amber-500/80">⚠ Stale</span>}</p>
+                <p className="text-xs font-mono text-muted-foreground/50 mt-0.5 truncate">{arb.kalshiTicker}</p>
                 <p className="text-xs text-muted-foreground/70 mt-0.5 hidden sm:block">{arb.direction}</p>
               </div>
               <div className="flex items-center gap-4 shrink-0">
