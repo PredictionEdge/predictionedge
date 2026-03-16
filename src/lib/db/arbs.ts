@@ -43,7 +43,7 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       depth_levels,
       snapshot_at
     FROM arb_snapshot
-    WHERE net_spread_pct > 0
+    WHERE net_spread_pct > 0.5
       ${timeFilter}
     ORDER BY market_match_id, snapshot_at DESC
   `);
