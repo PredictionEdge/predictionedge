@@ -39,6 +39,7 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
       poly_l1_size,
       max_size_dollars,
       COALESCE(total_arb_value, 0) as total_arb_value,
+      COALESCE(kalshi_subtitle, '') as kalshi_subtitle,
       depth_levels,
       snapshot_at
     FROM arb_snapshot
@@ -69,7 +70,9 @@ export async function getActiveArbs(): Promise<ArbWithSpread[]> {
 
     return {
       id: row.id,
-      market: row.kalshi_title || "Unknown",
+      market: row.kalshi_subtitle
+        ? `${row.kalshi_title} — ${row.kalshi_subtitle}`
+        : row.kalshi_title || "Unknown",
       category: "",
       kalshiTicker: row.kalshi_market_ticker,
       polymarketId: row.polymarket_market_ticker,
