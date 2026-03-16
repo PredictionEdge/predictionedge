@@ -28,7 +28,7 @@ export default function InfoTooltip({ text, className = "" }: Props) {
         onMouseEnter={() => { updatePos(); setShow(true); }}
         onMouseLeave={() => setShow(false)}
         onClick={() => { updatePos(); setShow(!show); }}
-        className="text-muted-foreground/40 hover:text-muted-foreground/70 transition-colors"
+        className="text-muted-foreground/40 hover:text-muted-foreground/90 transition-colors"
       >
         <Info className="h-3 w-3" />
       </button>

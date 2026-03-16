@@ -13,7 +13,7 @@ export default function Home() {
         <p className="mt-4 text-base text-muted-foreground max-w-lg leading-relaxed">
           Compare Polymarket and Kalshi side-by-side. Find price gaps. Calculate potential profit after fees.
         </p>
-        <p className="mt-4 text-xs text-muted-foreground/50">
+        <p className="mt-4 text-xs text-muted-foreground/70">
           Trading involves risk. Spreads are not guaranteed. <a href="/terms" className="underline hover:text-muted-foreground">Read our terms</a>.
         </p>
         <div className="mt-6 flex items-center gap-3">
@@ -36,7 +36,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-spread-green)] opacity-60" />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-spread-green)]" />
               </span>
-              <span className="text-xs text-muted-foreground/60">Live</span>
+              <span className="text-xs text-muted-foreground/80">Live</span>
             </div>
           </div>
           <div className="divide-y divide-border/50">

@@ -9,7 +9,7 @@ export default function ManageSubscription() {
   if (loading || (status !== "active" && status !== "trialing")) return null;
 
   return (
-    <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/70 hover:text-muted-foreground"
+    <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/90 hover:text-muted-foreground"
       disabled={portalLoading} onClick={async () => {
         setPortalLoading(true);
         try { const res = await fetch("/api/stripe/portal", { method: "POST" }); const d = await res.json(); if (d.url) window.location.href = d.url; }

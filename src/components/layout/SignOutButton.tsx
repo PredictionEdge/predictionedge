@@ -7,7 +7,7 @@ export default function SignOutButton() {
   const { signOut } = useAuth();
   const router = useRouter();
   return (
-    <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/70 hover:text-muted-foreground" onClick={async () => { await signOut(); router.push("/"); }}>
+    <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/90 hover:text-muted-foreground" onClick={async () => { await signOut(); router.push("/"); }}>
       Sign out
     </Button>
   );

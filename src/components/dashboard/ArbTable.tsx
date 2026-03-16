@@ -30,15 +30,15 @@ export default function ArbTable() {
       {data?.message ? (
         <>
           <p className="text-sm text-muted-foreground">🔒 Early access</p>
-          <p className="text-xs text-muted-foreground/70 mt-2 max-w-xs mx-auto">{data.message}</p>
-          <p className="text-xs text-muted-foreground/50 mt-4">
+          <p className="text-xs text-muted-foreground/90 mt-2 max-w-xs mx-auto">{data.message}</p>
+          <p className="text-xs text-muted-foreground/70 mt-4">
             Questions? <a href="mailto:support@predictionedge.win" className="text-foreground hover:underline">support@predictionedge.win</a>
           </p>
         </>
       ) : (
         <>
           <p className="text-sm text-muted-foreground">No opportunities right now</p>
-          <p className="text-xs text-muted-foreground/70 mt-1">Check back soon</p>
+          <p className="text-xs text-muted-foreground/90 mt-1">Check back soon</p>
         </>
       )}
     </div>
@@ -78,13 +78,13 @@ export default function ArbTable() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-spread-green)] opacity-60" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--color-spread-green)]" />
             </span>
-            <span className="text-xs text-muted-foreground/70">{lastRefresh.toLocaleTimeString()}</span>
+            <span className="text-xs text-muted-foreground/90">{lastRefresh.toLocaleTimeString()}</span>
           </div>
           <div className="flex items-center gap-0.5">
             {(["spread", "market"] as SortField[]).map(f => (
               <button key={f} onClick={() => toggleSort(f)}
                 className={`px-2 py-1 text-xs rounded-md capitalize transition-colors ${
-                  sortField === f ? "text-foreground bg-secondary" : "text-muted-foreground/70 hover:text-muted-foreground"
+                  sortField === f ? "text-foreground bg-secondary" : "text-muted-foreground/90 hover:text-muted-foreground"
                 }`}>
                 {f}{sortField === f && (sortDir === "desc" ? " ↓" : " ↑")}
               </button>
@@ -100,10 +100,10 @@ export default function ArbTable() {
             className={`transition-colors ${arb.stale ? "opacity-50" : ""} ${selectedArb?.id === arb.id ? "bg-secondary/50" : "hover:bg-secondary/30"}`}>
             <div className="px-5 py-4 flex items-center gap-4">
               <div className="flex-1 min-w-0">
-                {arb.category && <p className="text-xs text-muted-foreground/70 mb-0.5">{arb.category}</p>}
+                {arb.category && <p className="text-xs text-muted-foreground/90 mb-0.5">{arb.category}</p>}
                 <p className="text-sm truncate">{arb.market}{arb.stale && <span className="ml-2 text-xs text-amber-500/80">⚠ Stale</span>}</p>
-                <p className="text-xs font-mono text-muted-foreground/50 mt-0.5 truncate">{arb.kalshiTicker}</p>
-                <p className="text-xs text-muted-foreground/70 mt-0.5 hidden sm:block">{arb.direction}</p>
+                <p className="text-xs font-mono text-muted-foreground/70 mt-0.5 truncate">{arb.kalshiTicker}</p>
+                <p className="text-xs text-muted-foreground/90 mt-0.5 hidden sm:block">{arb.direction}</p>
               </div>
               <div className="flex items-center gap-4 shrink-0">
                 <div className="text-right hidden sm:block">
@@ -122,18 +122,18 @@ export default function ArbTable() {
                 </div>
                 {arb.maxSize > 0 && (
                   <div className="text-right hidden md:block">
-                    <p className="text-xs text-muted-foreground/50 mb-0.5">L1 Size</p>
+                    <p className="text-xs text-muted-foreground/70 mb-0.5">L1 Size</p>
                     <span className="text-sm font-mono text-muted-foreground">
                       {arb.maxSize >= 1000 ? `${(arb.maxSize / 1000).toFixed(1)}k` : Math.floor(arb.maxSize)}
                     </span>
                     {arb.totalDepth > arb.maxSize && (
-                      <p className="text-[10px] text-muted-foreground/50">{arb.totalDepth} total</p>
+                      <p className="text-[10px] text-muted-foreground/70">{arb.totalDepth} total</p>
                     )}
                   </div>
                 )}
                 {arb.totalArbValue > 0 && (
                   <div className="text-right hidden lg:block">
-                    <p className="text-xs text-muted-foreground/50 mb-0.5">Value</p>
+                    <p className="text-xs text-muted-foreground/70 mb-0.5">Value</p>
                     <span className="text-sm font-mono text-[var(--color-spread-green)]">
                       ${arb.totalArbValue.toFixed(2)}
                     </span>
@@ -150,7 +150,7 @@ export default function ArbTable() {
                   className={`h-7 w-7 rounded-full flex items-center justify-center text-xs transition-colors ${
                     selectedArb?.id === arb.id
                       ? "bg-foreground text-background"
-                      : "text-muted-foreground/60 hover:text-muted-foreground"
+                      : "text-muted-foreground/80 hover:text-muted-foreground"
                   }`}>
                   {selectedArb?.id === arb.id ? "×" : "→"}
                 </button>
@@ -171,7 +171,7 @@ export default function ArbTable() {
                           </span>
                           <span className="flex items-center gap-3">
                             <span className="text-[var(--color-spread-green)]">+{level.spread_pct.toFixed(1)}%</span>
-                            <span className="text-muted-foreground/70">${level.value.toFixed(2)}</span>
+                            <span className="text-muted-foreground/90">${level.value.toFixed(2)}</span>
                           </span>
                         </div>
                       ))}
