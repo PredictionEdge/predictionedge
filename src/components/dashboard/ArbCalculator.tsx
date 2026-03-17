@@ -4,6 +4,12 @@ import { useState } from "react";
 import { ArbWithSpread } from "@/lib/db/types";
 import { Input } from "@/components/ui/input";
 
+function formatCents(price: number): string {
+  const cents = price * 100;
+  if (cents === 0) return "0";
+  return cents % 1 === 0 ? cents.toFixed(0) : cents.toFixed(1);
+}
+
 interface Props { arb: ArbWithSpread; onClose: () => void; }
 
 export default function ArbCalculator({ arb }: Props) {
@@ -41,7 +47,7 @@ export default function ArbCalculator({ arb }: Props) {
           className="flex items-center justify-between rounded-lg border border-[var(--color-kalshi)]/30 bg-[var(--color-kalshi)]/5 px-4 py-3 hover:bg-[var(--color-kalshi)]/10 transition-colors">
           <div>
             <p className="text-xs text-muted-foreground/80 mb-0.5">Buy {kalshiSide} on Kalshi</p>
-            <p className="font-mono text-lg text-[var(--color-kalshi)]">{(arb.kalshiPrice * 100).toFixed(0)}¢</p>
+            <p className="font-mono text-lg text-[var(--color-kalshi)]">{formatCents(arb.kalshiPrice)}¢</p>
           </div>
           <span className="text-[var(--color-kalshi)]/60 text-lg">→</span>
         </a>
@@ -49,7 +55,7 @@ export default function ArbCalculator({ arb }: Props) {
           className="flex items-center justify-between rounded-lg border border-[var(--color-poly)]/30 bg-[var(--color-poly)]/5 px-4 py-3 hover:bg-[var(--color-poly)]/10 transition-colors">
           <div>
             <p className="text-xs text-muted-foreground/80 mb-0.5">Buy {polySide} on Polymarket</p>
-            <p className="font-mono text-lg text-[var(--color-poly)]">{(arb.polymarketPrice * 100).toFixed(0)}¢</p>
+            <p className="font-mono text-lg text-[var(--color-poly)]">{formatCents(arb.polymarketPrice)}¢</p>
           </div>
           <span className="text-[var(--color-poly)]/60 text-lg">→</span>
         </a>
@@ -58,7 +64,7 @@ export default function ArbCalculator({ arb }: Props) {
       {/* Key numbers - single row */}
       <div className="flex items-center justify-between text-xs px-1">
         <span className="text-muted-foreground/80">
-          Cost: <span className="font-mono text-foreground/80">{(totalCost * 100).toFixed(0)}¢</span>
+          Cost: <span className="font-mono text-foreground/80">{formatCents(totalCost)}¢</span>
           {" · "}Fees: <span className="font-mono text-red-400/70">{(feesPerContract * 100).toFixed(1)}¢</span>
           {" · "}Net: <span className="font-mono text-[var(--color-spread-green)]">{(netProfitPerContract * 100).toFixed(1)}¢</span>
         </span>
