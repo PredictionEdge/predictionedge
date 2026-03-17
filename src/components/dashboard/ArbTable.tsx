@@ -7,6 +7,14 @@ import ArbCalculator from "./ArbCalculator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
+/** Format price as cents, showing fractional cent when relevant */
+function formatCents(price: number): string {
+  const cents = price * 100;
+  if (cents === 0) return "0";
+  // Show 1 decimal if fractional cent matters (e.g. 3.5¢), otherwise whole
+  return cents % 1 === 0 ? cents.toFixed(0) : cents.toFixed(1);
+}
+
 type SortField = "spread" | "value" | "market";
 type SortDir = "asc" | "desc";
 
@@ -95,16 +103,16 @@ export default function ArbTable() {
               <div className="flex items-center gap-4 shrink-0">
                 <div className="text-right hidden sm:block">
                   <span className="text-sm font-mono text-[var(--color-kalshi)]">
-                    {(arb.kalshiPrice * 100).toFixed(0)}¢
+                    {formatCents(arb.kalshiPrice)}¢
                   </span>
                   <span className="text-muted-foreground/70 mx-1">+</span>
                   <span className="text-sm font-mono text-[var(--color-poly)]">
-                    {(arb.polymarketPrice * 100).toFixed(0)}¢
+                    {formatCents(arb.polymarketPrice)}¢
                   </span>
                 </div>
                 <div className="text-right min-w-[4.5rem]">
                   <p className="text-sm font-mono text-[var(--color-spread-green)]">
-                    +{arb.spread.toFixed(1)}%
+                    +{arb.spread < 1 ? arb.spread.toFixed(2) : arb.spread.toFixed(1)}%
                   </p>
                   {arb.totalArbValue > 0 && (
                     <p className="text-xs font-mono text-[var(--color-spread-green)]/80">
